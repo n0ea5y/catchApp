@@ -12,8 +12,8 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
+        <div class="min-h-screen bg-white">
+            <nav class="bg-[#f5fffa] border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
@@ -31,6 +31,9 @@ const showingNavigationDropdown = ref(false);
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
+                                </NavLink>
+                                <NavLink :href="route('users.index')" :active="route().current('users.index')">
+                                    ユーザーリスト
                                 </NavLink>
                             </div>
                         </div>
@@ -115,6 +118,9 @@ const showingNavigationDropdown = ref(false);
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('users.index')" :active="route().current('users.index')">
+                            ユーザーリスト
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -137,7 +143,7 @@ const showingNavigationDropdown = ref(false);
             </nav>
 
             <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
+            <header class="bg-[#f5fffa] shadow" v-if="$slots.header">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>
@@ -147,6 +153,15 @@ const showingNavigationDropdown = ref(false);
             <main>
                 <slot />
             </main>
+
+            <footer class="bg-[#f5fffa] shadow">
+                <div class="max-w-7xl mx-auto text-gray-400 py-6 px-4 sm:px-6 lg:px-8 text-center">
+                    © 2021 - Catch App.
+                </div>
+            </footer>
+
         </div>
     </div>
+
+    
 </template>
