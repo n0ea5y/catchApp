@@ -16,7 +16,6 @@ const props = defineProps({
     userDetail: Object,
 });
 
-console.log(props.userDetail);
 onMounted(() => {
     getSales();
 })
@@ -42,7 +41,6 @@ const addFlag = ref(true);
 // 店舗取得API
 axios.get('/store/getStoreList')
     .then(function (res) {
-        console.log(res);
         storeList.value = res.data;
     })
     .catch(function (error) {
@@ -51,11 +49,9 @@ axios.get('/store/getStoreList')
 
 // ユーザに紐づく金額取得API
 const getSales = () => {
-    console.log('test')
     axios.get(`/sale/getSaleList/${props.userDetail.id}`)
         .then(function (response) {
             saleList.value = response.data;
-            console.log(response.data);
         })
         .catch(function (error) {
         })
@@ -76,6 +72,7 @@ const rowClick = (item) => {
  * 登録時処理関数
  */
 const onAdd = () => {
+    
     axios.post('/sale', {
         users_id: props.userDetail.id,
         stores_id: stores_id.value,
@@ -89,7 +86,6 @@ const onAdd = () => {
             getSales();
         })
         .catch(function (error) {
-            console.log(error);
         });
 }
 
@@ -104,25 +100,39 @@ const onEdit = () => {
         created_date: created_date.value,
     })
         .then(function (response) {
-            console.log(response.data);
             if (response.status == 200) {
                 flashMessage.value = '更新完了しました！'
             }
             getSales();
         })
         .catch(function (error) {
-            console.log(error);
             if (response.status != 200) {
                 flashMessage.value = '更新に失敗しました！'
             }
         });
 }
 
+
+
 /**
  * 削除時処理関数
  */
 const onDelete = () => {
-    console.log("削除がクリックされたよ")
+    const isCheck = confirm("削除しますか？")
+    if(!isCheck) return ;
+
+    axios.delete(`/sale/${rowIndex.value}`)
+        .then(function (response) {
+            if (response.status == 200) {
+                flashMessage.value = '削除完了しました！'
+            }
+            getSales();
+        })
+        .catch(function (error) {
+            if (response.status != 200) {
+                flashMessage.value = '削除に失敗しました！'
+            }
+        });   
 }
 
 const onAddMode = () => {
@@ -144,11 +154,9 @@ const isEnpteCheck = computed(() => {
 })
 
 watch(() => isEnpteCheck.value, ((newVal) => {
-    console.log(newVal)
 }));
 
 const test = () => {
-    console.log(`click`)
 }
 
 </script>
@@ -215,7 +223,7 @@ const test = () => {
 
                     <div v-else class="flex flex-col lg:flex-row justify-around">
                         <CatchButton btnType="edit" :disabled="!isEnpteCheck" @click="onEdit">更新</CatchButton>
-                        <CatchButton btnType="delete" :disabled="!isEnpteCheck">削除</CatchButton>
+                        <CatchButton btnType="delete" :disabled="!isEnpteCheck" @click="onDelete">削除</CatchButton>
                         <CatchButton btnType="insert" :disabled="!isEnpteCheck" @click="onAddMode"
                             class="hover:bg-[#539953]">追加
                         </CatchButton>

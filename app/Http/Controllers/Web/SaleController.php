@@ -98,7 +98,8 @@ class SaleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $sale = Sale::find($id);
+        $sale->delete();
     }
 
     public function getSales(String $id)
