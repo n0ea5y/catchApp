@@ -35,11 +35,12 @@ const submit = () => {
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
+            いいいい    
         </div>
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="name" value="name" />
+                <InputLabel for="name" value="名前" />
 
                 <TextInput
                     id="name"
@@ -55,7 +56,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" value="パスワード" />
 
                 <TextInput
                     id="password"
