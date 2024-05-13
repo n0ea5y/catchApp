@@ -16,6 +16,7 @@ const props = defineProps({
     userDetail: Object,
 });
 
+console.log(props.userDetail);
 onMounted(() => {
     getSales();
 })
@@ -39,9 +40,10 @@ const selectRowData = ref(null);
 const addFlag = ref(true);
 
 // 店舗取得API
-axios.get('/stores')
-    .then(function (response) {
-        storeList.value = response.data;
+axios.get('/store/getStoreList')
+    .then(function (res) {
+        console.log(res);
+        storeList.value = res.data;
     })
     .catch(function (error) {
     })
@@ -49,13 +51,14 @@ axios.get('/stores')
 
 // ユーザに紐づく金額取得API
 const getSales = () => {
+    console.log('test')
     axios.get(`/sale/getSaleList/${props.userDetail.id}`)
-    .then(function (response) {
-        saleList.value = response.data;
-        console.log(response.data);
-    })
-    .catch(function (error) {
-    })
+        .then(function (response) {
+            saleList.value = response.data;
+            console.log(response.data);
+        })
+        .catch(function (error) {
+        })
 
 }
 
@@ -65,7 +68,7 @@ const rowClick = (item) => {
     created_date.value = formatDate(item.created_date);
 
     selectRowData.value = item.id
-    rowIndex.value  = item.id;
+    rowIndex.value = item.id;
     addFlag.value = false;
 }
 
@@ -78,16 +81,16 @@ const onAdd = () => {
         stores_id: stores_id.value,
         customer_payment: customer_payment.value,
         created_date: created_date.value,
-  })
-  .then(function (response) {
-    if(response.status == 200 ){
-        flashMessage.value = '更新完了しました！'
-    }
-    getSales();
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+    })
+        .then(function (response) {
+            if (response.status == 200) {
+                flashMessage.value = '更新完了しました！'
+            }
+            getSales();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 
 /**
@@ -99,20 +102,20 @@ const onEdit = () => {
         stores_id: stores_id.value,
         customer_payment: customer_payment.value,
         created_date: created_date.value,
-  })
-  .then(function (response) {
-    console.log(response.data);
-    if(response.status == 200 ){
-        flashMessage.value = '更新完了しました！'
-    }
-    getSales();
-  })
-  .catch(function (error) {
-    console.log(error);
-    if(response.status != 200 ){
-        flashMessage.value = '更新に失敗しました！'
-    }
-  });
+    })
+        .then(function (response) {
+            console.log(response.data);
+            if (response.status == 200) {
+                flashMessage.value = '更新完了しました！'
+            }
+            getSales();
+        })
+        .catch(function (error) {
+            console.log(error);
+            if (response.status != 200) {
+                flashMessage.value = '更新に失敗しました！'
+            }
+        });
 }
 
 /**
@@ -123,8 +126,8 @@ const onDelete = () => {
 }
 
 const onAddMode = () => {
-    created_date.value  = '';
-    stores_id.value  = '';
+    created_date.value = '';
+    stores_id.value = '';
     customer_payment.value = '';
     selectRowData.value = '';
 
@@ -142,7 +145,7 @@ const isEnpteCheck = computed(() => {
 
 watch(() => isEnpteCheck.value, ((newVal) => {
     console.log(newVal)
-})); 
+}));
 
 const test = () => {
     console.log(`click`)
@@ -164,7 +167,9 @@ const test = () => {
                         <th class="py-2 px-5 border">日付</th>
                     </template>
                     <template v-if="saleList.length !== 0" #tData>
-                        <tr v-for="sale in saleList" :key="sale.id" :class="{ 'selectRowBgColor': selectRowData == sale.id }" class="hover:bg-[#EBF5F0]" @click="rowClick(sale)">
+                        <tr v-for="sale in saleList" :key="sale.id"
+                            :class="{ 'selectRowBgColor': selectRowData == sale.id }" class="hover:bg-[#EBF5F0]"
+                            @click="rowClick(sale)">
                             <td class="py-2 px-5 border text-center">{{ shopMapping(storeList, sale.stores_id) }}</td>
                             <td class="py-2 px-5 border text-center">{{ formatSale(sale.customer_payment) }} 円</td>
                             <td class="py-2 px-5 border text-center">{{ formatDate(sale.created_date) }}</td>
@@ -172,7 +177,7 @@ const test = () => {
                     </template>
                     <template v-else #tData>
                         <tr>
-                            <td  colspan="3" class="py-2 px-5 border text-center text-red-700">登録されていません</td>
+                            <td colspan="3" class="py-2 px-5 border text-center text-red-700">登録されていません</td>
                         </tr>
                     </template>
                 </CatchTable>
@@ -189,25 +194,31 @@ const test = () => {
                         </option>
                     </select>
 
-                     <div class=mb-4>
+                    <div class=mb-4>
                         <InputLabel for="sale" value="金額入力" />
-                        <TextInput id="sale" type="Number" class="mt-1 block w-full" v-model="customer_payment" placeholder="半角で数値入力" required autofocus/>
+                        <TextInput id="sale" type="Number" class="mt-1 block w-full" v-model="customer_payment"
+                            placeholder="半角で数値入力" required autofocus />
                         <InputError class="mt-2" :message="form.errors.sale" />
                     </div>
 
                     <div class=mb-4>
-                        <InputLabel for="date"/>
-                        <TextInput id="date" type="Date" class="mt-1 block w-full" v-model="created_date"  required autofocus/>
+                        <InputLabel for="date" />
+                        <TextInput id="date" type="Date" class="mt-1 block w-full" v-model="created_date" required
+                            autofocus />
                         <InputError class="mt-2" :message="form.errors.date" />
                     </div>
                     <div v-if="addFlag" class="flex justify-center">
-                        <button type="btn" :class="{ 'bg-gray-400 cursor-not-allowed': !isEnpteCheck }" class="border-2 border-solid mb-2 w-full py-2 rounded-lg bg-[#ffff89] text-[#808080]" @click="onAdd" :disabled="!isEnpteCheck">登録する</button>
+                        <button type="btn" :class="{ 'bg-gray-400 cursor-not-allowed': !isEnpteCheck }"
+                            class="border-2 border-solid mb-2 w-full py-2 rounded-lg bg-[#ffff89] text-[#808080]"
+                            @click="onAdd" :disabled="!isEnpteCheck">登録する</button>
                     </div>
 
                     <div v-else class="flex flex-col lg:flex-row justify-around">
-                        <CatchButton btnType="edit" :disabled="!isEnpteCheck"  @click="onEdit">更新</CatchButton>
+                        <CatchButton btnType="edit" :disabled="!isEnpteCheck" @click="onEdit">更新</CatchButton>
                         <CatchButton btnType="delete" :disabled="!isEnpteCheck">削除</CatchButton>
-                        <CatchButton btnType="insert" :disabled="!isEnpteCheck" @click="onAddMode"  class="hover:bg-[#539953]">追加</CatchButton>
+                        <CatchButton btnType="insert" :disabled="!isEnpteCheck" @click="onAddMode"
+                            class="hover:bg-[#539953]">追加
+                        </CatchButton>
 
                     </div>
                 </form>
@@ -217,7 +228,7 @@ const test = () => {
     </AuthenticatedLayout>
 </template>
 <style scoped>
-.selectRowBgColor{
+.selectRowBgColor {
     background-color: #EBF5F0;
 }
 </style>

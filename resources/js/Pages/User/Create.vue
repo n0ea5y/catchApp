@@ -15,7 +15,6 @@ const props = defineProps({
 
 onMounted(() => {
     getUserListAPI();
-
 })
 
 const userDetail = ref({
@@ -38,7 +37,7 @@ const selectRowData = ref(null);
 const addFlag = ref(true);
 
 // 店舗取得API
-axios.get('/stores')
+axios.get('/store/getStoreList')
     .then(function (response) {
         storeList.value = response.data;
     })
@@ -57,6 +56,7 @@ const rowClick = (item) => {
 const getUserListAPI = () => {
     axios.get('/getUserList')
         .then((res) => {
+            console.log(res.data);
             userList.value = res.data;
         })
         .catch((error) => {
@@ -68,7 +68,7 @@ const getUserListAPI = () => {
  * 登録時処理関数
  */
 const onAdd = () => {
-    axios.post('/users', {
+    axios.post('/user', {
         name: userDetail.value.name,
         email: userDetail.value.email,
         stores_id: userDetail.value.stores_id,
@@ -93,7 +93,7 @@ const onAdd = () => {
  * 更新時処理関数
  */
 const onEdit = () => {
-    axios.put(`/users/${rowIndex.value}`, {
+    axios.put(`/user/${rowIndex.value}`, {
         name: userDetail.value.name,
         email: userDetail.value.email,
         stores_id: userDetail.value.stores_id,
@@ -122,7 +122,7 @@ const onEdit = () => {
  * 削除時処理関数
  */
 const onDelete = (item) => {
-    axios.delete('/users/'+ userDetail.value.id)
+    axios.delete('/user/'+ userDetail.value.id)
         .then((res) => {
             getUserListAPI();
         })
