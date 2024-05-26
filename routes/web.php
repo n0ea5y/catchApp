@@ -19,6 +19,10 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Dashboard');
     })->middleware(['auth', 'verified'])->name('dashboard');
 
+    Route::get('/dashboard/sp', function () {
+        return Inertia::render('DashboardSp');
+    })->middleware(['auth', 'verified'])->name('dashboardSp');
+
     Route::resource('/user', UserController::class);
     Route::resource('/sale', SaleController::class);
     // Route::resource('/profile', ProfileController::class);
