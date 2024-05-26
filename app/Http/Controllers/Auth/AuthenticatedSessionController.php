@@ -34,12 +34,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
         $agent = new Agent();
-        if(!$agent->isMobile()){
-            // dd($agent);
-            return redirect()->intended(route('dashboard', absolute: false));
+        if($agent->isMobile()){
+            return redirect()->route('dashboardSp');
+            // return redirect()->intended(route('dashboard', absolute: false));
         }else{
-            // dd($agent);
-            return redirect()->intended(route('dashboardSp', absolute: false));
+            return redirect()->route('dashboard');
+            // return redirect()->intended(route('dashboardSp', absolute: false));
         }
     }
 
