@@ -35,7 +35,6 @@ const submit = () => {
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
-            いいいい    
         </div>
 
         <form @submit.prevent="submit">

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
+use Jenssegers\Agent\Agent;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -32,8 +33,14 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        return redirect()->intended(route('dashboard', absolute: false));
+        $agent = new Agent();
+        if($agent->isMobile()){
+            return redirect()->route('dashboardSp');
+            // return redirect()->intended(route('dashboard', absolute: false));
+        }else{
+            return redirect()->route('dashboard');
+            // return redirect()->intended(route('dashboardSp', absolute: false));
+        }
     }
 
     /**
