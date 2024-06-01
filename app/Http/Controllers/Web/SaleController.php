@@ -60,7 +60,7 @@ class SaleController extends Controller
     {
         $userDetail = User::find($id);
         
-        return Inertia::render('Sale/Show',[
+        return Inertia::render('Pc/Sale/Show',[
             'userDetail' => $userDetail,
         ]);
     }
