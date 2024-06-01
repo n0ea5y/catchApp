@@ -19,9 +19,18 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): Response
     {
+
+        $agent = new Agent();
+
+        // デバイスの判定
+        $isMobile = $agent->isMobile();
+        $isDesktop = $agent->isDesktop();
+
         return Inertia::render('Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
+            'isMobile' => $isMobile,
+            'isDesktop' => $isDesktop,
         ]);
     }
 
@@ -31,16 +40,23 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
+                    // セッションを再生成
         $request->session()->regenerate();
+        $request->session()->regenerate();
+
+        // デバイスの判定
         $agent = new Agent();
-        if($agent->isMobile()){
-            return redirect()->route('dashboardSp');
-            // return redirect()->intended(route('dashboard', absolute: false));
-        }else{
+        $isMobile = $agent->isMobile();
+
+        // return redirect()->route('dashboard');
+
+                // デバイスに応じてリダイレクト先を決定
+        if ($isMobile) {
+            return redirect()->route('sp.dashboard');
+        } else {
             return redirect()->route('dashboard');
-            // return redirect()->intended(route('dashboardSp', absolute: false));
         }
+
     }
 
     /**

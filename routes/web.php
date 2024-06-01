@@ -12,16 +12,16 @@ use Inertia\Inertia;
 Route::middleware('auth')->group(function () {
 
     Route::get('/', function () {
-        return Inertia::render('Dashboard');
+        return Inertia::render('Pc/Dashboard');
     });
         
     Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
+        return Inertia::render('Pc/Dashboard');
     })->middleware(['auth', 'verified'])->name('dashboard');
 
-    Route::get('/dashboard/sp', function () {
-        return Inertia::render('DashboardSp');
-    })->middleware(['auth', 'verified'])->name('dashboardSp');
+    Route::get('/sp/dashboard', function () {
+        return Inertia::render('Sp/Dashboard');
+    })->middleware(['auth', 'verified'])->name('sp.dashboard');
 
     Route::resource('/user', UserController::class);
     Route::resource('/sale', SaleController::class);
