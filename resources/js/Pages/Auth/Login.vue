@@ -14,6 +14,12 @@ defineProps({
     status: {
         type: String,
     },
+    isMobile: {
+        type: Boolean,
+    },
+    isDesktop: {
+        type: Boolean,
+    },
 });
 
 const form = useForm({
