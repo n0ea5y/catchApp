@@ -1,0 +1,62 @@
+
+  GET|HEAD        / .............................. generated::1dEo6z6mLd5D4ntW
+  POST            _ignition/execute-solution ignition.executeSolution › Spati…
+  GET|HEAD        _ignition/health-check ignition.healthCheck › Spatie\Larave…
+  POST            _ignition/update-config ignition.updateConfig › Spatie\Lara…
+  GET|HEAD        api/user ....................... generated::ztezY1C4K7wxilMb
+  GET|HEAD        confirm-password password.confirm › Auth\ConfirmablePasswor…
+  POST            confirm-password generated::ZQncNIGkh8Qd1IaO › Auth\Confirm…
+  GET|HEAD        dashboard ........................................ dashboard
+  POST            email/verification-notification verification.send › Auth\Em…
+  GET|HEAD        forgot-password password.request › Auth\PasswordResetLinkCo…
+  POST            forgot-password password.email › Auth\PasswordResetLinkCont…
+  GET|HEAD        getUserList generated::12jsYE8T39Y1NK2I › Web\UserControlle…
+  GET|HEAD        login ... login › Auth\AuthenticatedSessionController@create
+  POST            login generated::kouVEpZsfux0vn0p › Auth\AuthenticatedSessi…
+  POST            logout logout › Auth\AuthenticatedSessionController@destroy
+  PUT             password .. password.update › Auth\PasswordController@update
+  GET|HEAD        profile .............. profile.edit › ProfileController@edit
+  PATCH           profile .......... profile.update › ProfileController@update
+  DELETE          profile ........ profile.destroy › ProfileController@destroy
+  GET|HEAD        register ... register › Auth\RegisteredUserController@create
+  POST            register generated::sEJ2d6dtNJFHvSKu › Auth\RegisteredUserC…
+  POST            reset-password password.store › Auth\NewPasswordController@…
+  GET|HEAD        reset-password/{token} password.reset › Auth\NewPasswordCon…
+  GET|HEAD        sale ................. sale.index › Web\SaleController@index
+  POST            sale ................. sale.store › Web\SaleController@store
+  GET|HEAD        sale/create ........ sale.create › Web\SaleController@create
+  GET|HEAD        sale/getSaleList/{userId} generated::a6WJQvZaKFeU8s8O › Web…
+  GET|HEAD        sale/{sale} ............ sale.show › Web\SaleController@show
+  PUT|PATCH       sale/{sale} ........ sale.update › Web\SaleController@update
+  DELETE          sale/{sale} ...... sale.destroy › Web\SaleController@destroy
+  GET|HEAD        sale/{sale}/edit ....... sale.edit › Web\SaleController@edit
+  GET|HEAD        sanctum/csrf-cookie sanctum.csrf-cookie › Laravel\Sanctum  …
+  GET|HEAD        sp/dashboard .................................. sp.dashboard
+  GET|HEAD        sp/sale ........... sp.sale.index › Web\SaleController@index
+  POST            sp/sale ........... sp.sale.store › Web\SaleController@store
+  GET|HEAD        sp/sale/create .. sp.sale.create › Web\SaleController@create
+  GET|HEAD        sp/sale/{sale} ...... sp.sale.show › Web\SaleController@show
+  PUT|PATCH       sp/sale/{sale} .. sp.sale.update › Web\SaleController@update
+  DELETE          sp/sale/{sale} sp.sale.destroy › Web\SaleController@destroy
+  GET|HEAD        sp/sale/{sale}/edit . sp.sale.edit › Web\SaleController@edit
+  GET|HEAD        sp/user ........... sp.user.index › Web\UserController@index
+  POST            sp/user ........... sp.user.store › Web\UserController@store
+  GET|HEAD        sp/user/create .. sp.user.create › Web\UserController@create
+  GET|HEAD        sp/user/{user} ...... sp.user.show › Web\UserController@show
+  PUT|PATCH       sp/user/{user} .. sp.user.update › Web\UserController@update
+  DELETE          sp/user/{user} sp.user.destroy › Web\UserController@destroy
+  GET|HEAD        sp/user/{user}/edit . sp.user.edit › Web\UserController@edit
+  GET|HEAD        store/getStoreList generated::zSKfoOWOkjuAtTit › Web\StoreC…
+  GET|HEAD        up ............................. generated::0qZdL4046ybmsuOH
+  GET|HEAD        user ................. user.index › Web\UserController@index
+  POST            user ................. user.store › Web\UserController@store
+  GET|HEAD        user/create ........ user.create › Web\UserController@create
+  GET|HEAD        user/{user} ............ user.show › Web\UserController@show
+  PUT|PATCH       user/{user} ........ user.update › Web\UserController@update
+  DELETE          user/{user} ...... user.destroy › Web\UserController@destroy
+  GET|HEAD        user/{user}/edit ....... user.edit › Web\UserController@edit
+  GET|HEAD        verify-email verification.notice › Auth\EmailVerificationPr…
+  GET|HEAD        verify-email/{id}/{hash} verification.verify › Auth\VerifyE…
+
+                                                           Showing [58] routes
+

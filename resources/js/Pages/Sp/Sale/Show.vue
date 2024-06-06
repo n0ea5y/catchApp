@@ -1,5 +1,5 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import AuthenticatedLayoutSp from '@/Layouts/AuthenticatedLayoutSp.vue';
 import axios from 'axios';
 import { ref, watch, computed, onMounted } from 'vue';
 import TextInput from '@/Components/TextInput.vue'
@@ -161,13 +161,18 @@ const test = () => {
 
 </script>
 <template>
-    <AuthenticatedLayout>
+    <AuthenticatedLayoutSp>
         <div class="fixed w-full flex justify-center" v-if="flashMessage">
             <p class="py-4 px-10 rounded-lg bg-[#89ff89] text-[#ffffff]">{{ flashMessage }}</p>
         </div>
+
         <div class="flex py-4 px-4 m-2 shadow border rounded-lg bg-[#f5fffa]">
-            <div class="w-8/12 py-12 px-4 m-2 shadow border rounded-lg bg-white">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-10">{{ userDetail.name }}：月売り一覧</h2>
+            
+            <div class="px-4 py-2 shadow border rounded-lg bg-white">
+                <div class="flex justify-between items-center">
+                    <h4 class="font-semibold text-lg text-gray-800 leading-tight mb-2">{{ userDetail.name }}：月売り一覧</h4>
+                    <CatchButton btnType="insert"  @click="onAddMode" class="hover:bg-[#539953] w-[80px]">追加 </CatchButton>
+                </div>
                 <CatchTable>
                     <template #tHeader>
                         <th class="py-2 px-5 border">店舗</th>
@@ -191,7 +196,7 @@ const test = () => {
                 </CatchTable>
             </div>
 
-            <div class="w-4/12 py-12 px-4 m-2 shadow border rounded-lg bg-white">
+            <!-- <div class="w-4/12 py-12 px-4 m-2 shadow border rounded-lg bg-white">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-10">売上入力</h2>
 
                 <form @submit.prevent class="w-full">
@@ -230,10 +235,10 @@ const test = () => {
 
                     </div>
                 </form>
-            </div>
+            </div> -->
         </div>
 
-    </AuthenticatedLayout>
+    </AuthenticatedLayoutSp>
 </template>
 <style scoped>
 .selectRowBgColor {

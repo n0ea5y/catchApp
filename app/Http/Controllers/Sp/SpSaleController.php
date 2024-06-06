@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\Sp;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,8 +9,7 @@ use Inertia\Inertia;
 use App\Models\Sale;
 use Illuminate\Support\Carbon;
 
-
-class SaleController extends Controller
+class SpSaleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -60,7 +59,7 @@ class SaleController extends Controller
     {
         $userDetail = User::find($id);
         
-        return Inertia::render('Pc/Sale/Show',[
+        return Inertia::render('Sp/Sale/Show',[
             'userDetail' => $userDetail,
         ]);
     }
