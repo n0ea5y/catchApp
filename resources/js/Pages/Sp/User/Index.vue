@@ -1,13 +1,10 @@
 <script setup>
     import AuthenticatedLayoutSp from '@/Layouts/AuthenticatedLayoutSp.vue';
     import { Head, Link } from '@inertiajs/vue3';
-    import axios from 'axios';
 
     const props = defineProps({
         userList: Object,
     })
-
-    console.log(props.userList);
 
 </script>
 
@@ -15,21 +12,10 @@
     <Head title="CA/UserList" />
 
     <AuthenticatedLayoutSp>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight"></h2>
-        </template>
-        
-            <div class="flex justify-between">
-
-            <h2 class="font-semibold text-xl leading-tight py-2">ユーザーリスト</h2>
-            <div class="bg-yellow-200 flex px-3 rounded-lg shadow-lg hover:bg-yellow-400 transform transition">
-                <Link :href="route('user.create')" method="get" as="button" type="button">ユーザー作成</Link>
-            </div>
-        </div>
-        <div class="py-12 px-12 m-2 shadow border rounded-lg flex flex-wrap bg-[#f5fffa]">
+        <div class="py-6 px-2 mb-10 shadow flex flex-wrap justify-center ">
             <template v-for="item in userList" :key="item.id">
                 <Link :href="route('sp.sale.show', { sale: item.id })">
-                <div class="rounded-lg overflow-hidden shadow-lg w-[431px] mx-[10px] my-[10px] hover:bg-[#EBF5F0] test">
+                <div class="rounded-lg mb-10 w-12/12 shadow-lg">
                     <div class="px-6 py-4">
                         <div class="font-bold text-xl mb-2">{{ item.name }}</div>
                         <p class="text-gray-700 text-base"></p>
@@ -52,8 +38,5 @@
 </template>
 
 <style>
-.test:hover{
-    transform:scale(1.1,1.1);
-    transition:.4s all;
-}
+
 </style>
