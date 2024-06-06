@@ -10,12 +10,8 @@ onMounted(() => {
 
 <template>
     <Head title="Dashboard" />
-
     <AuthenticatedLayoutSp>
-        <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
-        </template>
-
         <div class="px-2 m-1 py-5 rounded shadow-md bg-[#f5fffa]">
             <div class="text-gray-900">すまほだよ〜</div>
             <div class="p-2 rounded shadow-lg">
@@ -28,3 +24,4 @@ onMounted(() => {
 </template>
 <style>
 </style>
+
