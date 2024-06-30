@@ -147,69 +147,6 @@ watch(() => isEnpteCheck.value, ((newVal) => {
 </script>
 <template>
     <AuthenticatedLayoutSp>
-        <!-- <div class="fixed w-full flex justify-center" v-if="flashMessage">
-            <p class="py-4 px-10 rounded-lg bg-[#89ff89] text-[#ffffff]">{{ flashMessage }}</p>
-        </div>
-        <div class="flex py-4 px-4 m-2 shadow border rounded-lg bg-[#f5fffa]">
-            <div class="w-8/12 py-12 px-4 m-2 shadow border rounded-lg bg-white">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-10">{{ userDetail.name }}：月売り一覧</h2>
-                <CatchTable>
-                    <template #tHeader>
-                        <th class="py-2 px-5 border">店舗</th>
-                        <th class="py-2 px-5 border">売上</th>
-                        <th class="py-2 px-5 border">日付</th>
-                    </template>
-                    <template v-if="saleList.length !== 0" #tData>
-                        <tr v-for="sale in saleList" :key="sale.id" :class="{ 'selectRowBgColor': selectRowData == sale.id }" class="hover:bg-[#EBF5F0]" @click="rowClick(sale)">
-                            <td class="py-2 px-5 border text-center">{{ shopMapping(storeList, sale.stores_id) }}</td>
-                            <td class="py-2 px-5 border text-center">{{ formatSale(sale.customer_payment) }} 円</td>
-                            <td class="py-2 px-5 border text-center">{{ formatDate(sale.created_date) }}</td>
-                        </tr>
-                    </template>
-                    <template v-else #tData>
-                        <tr>
-                            <td  colspan="3" class="py-2 px-5 border text-center text-red-700">登録されていません</td>
-                        </tr>
-                    </template>
-                </CatchTable>
-            </div>
-
-            <div class="w-4/12 py-12 px-4 m-2 shadow border rounded-lg bg-white">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-10">売上入力</h2>
-
-                <form @submit.prevent class="w-full">
-                    <label for="store">店舗選択</label>
-                    <select id="store" name="store" class="w-full rounded-lg mb-4" v-model="stores_id">
-                        <option value="" disabled selected style="display:none; color: gray;">店舗を選択してください</option>
-                        <option class="" v-for="item in storeList" :key="item" :value="item.value">{{ item.title }}
-                        </option>
-                    </select>
-
-                     <div class=mb-4>
-                        <InputLabel for="sale" value="金額入力" />
-                        <TextInput id="sale" type="Number" class="mt-1 block w-full" v-model="customer_payment" placeholder="半角で数値入力" required autofocus/>
-                        <InputError class="mt-2" :message="form.errors.sale" />
-                    </div>
-
-                    <div class=mb-4>
-                        <InputLabel for="date"/>
-                        <TextInput id="date" type="Date" class="mt-1 block w-full" v-model="created_date"  required autofocus/>
-                        <InputError class="mt-2" :message="form.errors.date" />
-                    </div>
-                    <div v-if="addFlag" class="flex justify-center">
-                        <button type="btn" :class="{ 'bg-gray-400 cursor-not-allowed': !isEnpteCheck }" class="border-2 border-solid mb-2 w-full py-2 rounded-lg bg-[#ffff89] text-[#808080]" @click="onAdd" :disabled="!isEnpteCheck">登録する</button>
-                    </div>
-
-                    <div v-else class="flex flex-col lg:flex-row justify-around">
-                        <CatchButton btnType="edit" :disabled="!isEnpteCheck"  @click="onEdit">更新</CatchButton>
-                        <CatchButton btnType="delete" :disabled="!isEnpteCheck">削除</CatchButton>
-                        <CatchButton btnType="insert" :disabled="!isEnpteCheck" @click="onAddMode"  class="hover:bg-[#539953]">追加</CatchButton>
-
-                    </div>
-                </form>
-            </div>
-        </div> -->
-
     </AuthenticatedLayoutSp>
 </template>
 <style scoped>
