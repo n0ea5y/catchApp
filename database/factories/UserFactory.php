@@ -19,7 +19,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
 
-        $names = ['はこだ', 'だいち', 'ひかる', 'りゅうや', 'あゆ'];
+        $names = ['はこだ', 'だいち', 'ひかる', 'りゅうや', 'あずみ'];
         $roles = ['1','0'];
         $deleted_ats = ['1','0'];
 

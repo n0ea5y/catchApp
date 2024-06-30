@@ -21,9 +21,9 @@ return new class extends Migration
             $table->foreign('stores_id')->references('id')->on('stores');
 
             $table->string('customer_payment')->comment('金額');
-            $table->enum('deleted_at',[1,0])->comment('論理削除');
-            $table->timestamp('created_at')->comment('作成日時');
-            $table->timestamp('updated_at')->comment('更新日時');
+            $table->enum('deleted_at',['1','0'])->comment('論理削除');
+            $table->timestamp('created_at')->useCurrent()->comment('作成日時');
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate()->comment('更新日時');
         });
     }
 
