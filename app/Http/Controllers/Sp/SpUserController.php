@@ -10,12 +10,13 @@ use Illuminate\Support\Facades\Log;
 
 class SpUserController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::all();   
+        $users = User::all();
         return Inertia::render('Sp/User/Index', ['userList' => $users]);
     }
 

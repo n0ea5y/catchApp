@@ -7,6 +7,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import CatchTable from '@/Components/CatchTable.vue';
 import CatchButton from '@/Components/CatchButton.vue';
+import catchMoal from '@/Components/catchMoal.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 import { formatSale, formatDate } from '@/formatList.js'
@@ -143,15 +144,10 @@ const isEnpteCheck = computed(() => {
 watch(() => isEnpteCheck.value, ((newVal) => {
     console.log(newVal)
 })); 
-
-const test = () => {
-    console.log(`click`)
-}
-
 </script>
 <template>
     <AuthenticatedLayoutSp>
-        <div class="fixed w-full flex justify-center" v-if="flashMessage">
+        <!-- <div class="fixed w-full flex justify-center" v-if="flashMessage">
             <p class="py-4 px-10 rounded-lg bg-[#89ff89] text-[#ffffff]">{{ flashMessage }}</p>
         </div>
         <div class="flex py-4 px-4 m-2 shadow border rounded-lg bg-[#f5fffa]">
@@ -212,7 +208,7 @@ const test = () => {
                     </div>
                 </form>
             </div>
-        </div>
+        </div> -->
 
     </AuthenticatedLayoutSp>
 </template>
