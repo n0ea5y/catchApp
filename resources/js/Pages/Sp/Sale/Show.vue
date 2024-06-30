@@ -8,6 +8,8 @@ import InputLabel from '@/Components/InputLabel.vue';
 import CatchTable from '@/Components/CatchTable.vue';
 import CatchButton from '@/Components/CatchButton.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import catchMoal from '@/Components/catchMoal.vue';
+import Modal from '@/Components/Modal.vue';
 
 import { formatSale, formatDate } from '@/formatList.js'
 import { shopMapping } from '@/utils.js'
@@ -35,6 +37,7 @@ const created_date = ref('');
 const flashMessage = ref('');
 const rowIndex = ref(null);
 const selectRowData = ref(null);
+const modalShow = ref(false);
 
 const addFlag = ref(true);
 
@@ -113,7 +116,6 @@ const onEdit = () => {
 }
 
 
-
 /**
  * 削除時処理関数
  */
@@ -140,8 +142,8 @@ const onAddMode = () => {
     stores_id.value = '';
     customer_payment.value = '';
     selectRowData.value = '';
-
     addFlag.value = true;
+    modalShow.value = true;
 }
 
 watch(() => flashMessage.value, (newVal) => {
@@ -156,48 +158,17 @@ const isEnpteCheck = computed(() => {
 watch(() => isEnpteCheck.value, ((newVal) => {
 }));
 
-const test = () => {
-}
-
 </script>
 <template>
     <AuthenticatedLayoutSp>
-        <div class="fixed w-full flex justify-center" v-if="flashMessage">
-            <p class="py-4 px-10 rounded-lg bg-[#89ff89] text-[#ffffff]">{{ flashMessage }}</p>
-        </div>
 
-        <div class="flex py-4 px-4 m-2 shadow border rounded-lg bg-[#f5fffa]">
-            
-            <div class="px-4 py-2 shadow border rounded-lg bg-white">
-                <div class="flex justify-between items-center">
-                    <h4 class="font-semibold text-lg text-gray-800 leading-tight mb-2">{{ userDetail.name }}：月売り一覧</h4>
-                    <CatchButton btnType="insert"  @click="onAddMode" class="hover:bg-[#539953] w-[80px]">追加 </CatchButton>
-                </div>
-                <CatchTable>
-                    <template #tHeader>
-                        <th class="py-2 px-5 border">店舗</th>
-                        <th class="py-2 px-5 border">売上</th>
-                        <th class="py-2 px-5 border">日付</th>
-                    </template>
-                    <template v-if="saleList.length !== 0" #tData>
-                        <tr v-for="sale in saleList" :key="sale.id"
-                            :class="{ 'selectRowBgColor': selectRowData == sale.id }" class="hover:bg-[#EBF5F0]"
-                            @click="rowClick(sale)">
-                            <td class="py-2 px-5 border text-center">{{ shopMapping(storeList, sale.stores_id) }}</td>
-                            <td class="py-2 px-5 border text-center">{{ formatSale(sale.customer_payment) }} 円</td>
-                            <td class="py-2 px-5 border text-center">{{ formatDate(sale.created_date) }}</td>
-                        </tr>
-                    </template>
-                    <template v-else #tData>
-                        <tr>
-                            <td colspan="3" class="py-2 px-5 border text-center text-red-700">登録されていません</td>
-                        </tr>
-                    </template>
-                </CatchTable>
-            </div>
+        <!-- <catchMoal :show="modalShow">
+            <h1>test</h1>
+        </catchMoal> -->
 
-            <!-- <div class="w-4/12 py-12 px-4 m-2 shadow border rounded-lg bg-white">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-10">売上入力</h2>
+        <!-- <catchMoal :show="modalShow">
+            <div class="flex flex-col justify-center items-center h-full px-5">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-10">売上入力{{ modalShow }}</h2>
 
                 <form @submit.prevent class="w-full">
                     <label for="store">店舗選択</label>
@@ -235,7 +206,44 @@ const test = () => {
 
                     </div>
                 </form>
-            </div> -->
+            </div>
+        </catchMoal> -->
+        <div class="fixed w-full flex justify-center" v-if="flashMessage">
+            <p class="py-4 px-10 rounded-lg bg-[#89ff89] text-[#ffffff]">{{ flashMessage }}</p>
+        </div>
+
+        <div class="flex py-4 px-4 m-2 shadow border rounded-lg bg-[#f5fffa]">
+            
+            <div class="px-4 py-2 shadow border rounded-lg bg-white">
+                <div class="flex justify-between items-center">
+                    <h4 class="font-semibold text-lg text-gray-800 leading-tight mb-2">{{ userDetail.name }}：月売り一覧{{ modalShow }}</h4>
+                    <CatchButton btnType="insert"  @click="onAddMode" class="hover:bg-[#539953] w-[80px]">追加 </CatchButton>
+                </div>
+                <CatchTable>
+
+                    <template #tHeader>
+                        <th class="py-2 px-5 border">店舗 </th>
+                        <th class="py-2 px-5 border">売上</th>
+                        <th class="py-2 px-5 border">日付</th>
+                    </template>
+                    <template v-if="saleList.length !== 0" #tData>
+                        <tr v-for="sale in saleList" :key="sale.id"
+                            :class="{ 'selectRowBgColor': selectRowData == sale.id }" class="hover:bg-[#EBF5F0]"
+                            @click="rowClick(sale)">
+                            <td class="py-2 px-5 border text-center">{{ shopMapping(storeList, sale.stores_id) }}</td>
+                            <td class="py-2 px-5 border text-center">{{ formatSale(sale.customer_payment) }} 円</td>
+                            <td class="py-2 px-5 border text-center">{{ formatDate(sale.created_date) }}</td>
+                        </tr>
+                    </template>
+                    <template v-else #tData>
+                        <tr>
+                            <td colspan="3" class="py-2 px-5 border text-center text-red-700">登録されていません</td>
+                        </tr>
+                    </template>
+                </CatchTable>
+            </div>
+
+            
         </div>
 
     </AuthenticatedLayoutSp>

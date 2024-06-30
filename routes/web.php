@@ -53,6 +53,10 @@ Route::middleware('auth')->group(function () {
         'destroy' => 'sp.sale.destroy',
     ]);
 
+    // 
+    Route::get('/getSaleData', [SpSaleController::class, 'getSaleList']);
+
+
     // 前店舗取得API
     Route::get('/store/getStoreList', [StoreController::class, 'getAllShopArrya']);
     // ユーザー売上取得API

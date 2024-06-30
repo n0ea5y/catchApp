@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Store;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -67,5 +68,12 @@ class User extends Authenticatable
         $store = Store::find($this->stores_id);
         // 店舗が存在する場合は店舗名を返し、存在しない場合は null を返す
         return $store ? $store->store_name : null;
+    }
+
+    public function getUeerAndSale () {
+        $userAndSale = DB::select(
+            'SELECT * FROM users'
+        );
+        return $userAndSale;
     }
 }
