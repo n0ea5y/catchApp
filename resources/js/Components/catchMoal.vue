@@ -6,24 +6,34 @@
         }
     })
 
+    const emit = defineEmits(['update:show']);    
+    
+    const handleClick = (e) => {
+        console.log(e);
+        e.target.setPointerCapture(e.pointerId);
+        emit('update:show', false);
+    }
 </script>
 
 <template>
-    <Teleport v-if="show" class="blackArea">
-        <div class="test">
-            <slot />
+    <Teleport to="body" v-if="show">
+        <div  class="blackArea" @pointerdown="handleClick">
+            <div class="mdMainArea" @pointerdown.stop>
+                <slot />
+            </div>
         </div>
     </Teleport>
 </template>
     
 <style scoped>
-.test{
+.mdMainArea{
     width: 80%;
     height: 45%;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0px 5px 40px -10px;
 }
+
 .blackArea {
     position: fixed;
     top: 0;

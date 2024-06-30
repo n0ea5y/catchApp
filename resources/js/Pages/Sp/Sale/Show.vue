@@ -69,6 +69,7 @@ const rowClick = (item) => {
     selectRowData.value = item.id
     rowIndex.value = item.id;
     addFlag.value = false;
+    modalShow.value = !modalShow.value;
 }
 
 /**
@@ -87,6 +88,7 @@ const onAdd = () => {
                 flashMessage.value = '更新完了しました！'
             }
             getSales();
+            modalShow.value = !modalShow.value;
         })
         .catch(function (error) {
         });
@@ -143,7 +145,7 @@ const onAddMode = () => {
     customer_payment.value = '';
     selectRowData.value = '';
     addFlag.value = true;
-    modalShow.value = true;
+    modalShow.value = !modalShow.value;
 }
 
 watch(() => flashMessage.value, (newVal) => {
@@ -158,15 +160,13 @@ const isEnpteCheck = computed(() => {
 watch(() => isEnpteCheck.value, ((newVal) => {
 }));
 
+const updateShow = (e) => {
+    modalShow.value = e
+}
 </script>
 <template>
     <AuthenticatedLayoutSp>
-
-        <!-- <catchMoal :show="modalShow">
-            <h1>test</h1>
-        </catchMoal> -->
-
-        <!-- <catchMoal :show="modalShow">
+        <catchMoal :show="modalShow" @update:show="updateShow">
             <div class="flex flex-col justify-center items-center h-full px-5">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-10">売上入力{{ modalShow }}</h2>
 
@@ -200,14 +200,11 @@ watch(() => isEnpteCheck.value, ((newVal) => {
                     <div v-else class="flex flex-col lg:flex-row justify-around">
                         <CatchButton btnType="edit" :disabled="!isEnpteCheck" @click="onEdit">更新</CatchButton>
                         <CatchButton btnType="delete" :disabled="!isEnpteCheck" @click="onDelete">削除</CatchButton>
-                        <CatchButton btnType="insert" :disabled="!isEnpteCheck" @click="onAddMode"
-                            class="hover:bg-[#539953]">追加
-                        </CatchButton>
 
                     </div>
                 </form>
             </div>
-        </catchMoal> -->
+        </catchMoal>
         <div class="fixed w-full flex justify-center" v-if="flashMessage">
             <p class="py-4 px-10 rounded-lg bg-[#89ff89] text-[#ffffff]">{{ flashMessage }}</p>
         </div>
