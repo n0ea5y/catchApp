@@ -6,8 +6,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import CatchTable from '@/Components/CatchTable.vue';
 import CatchButton from '@/Components/CatchButton.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import catchMoal from '@/Components/catchMoal.vue';
+import { useForm } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 
 import { formatSale, formatDate } from '@/formatList.js'
@@ -23,7 +22,7 @@ onMounted(() => {
 
 const form = useForm({
     store: 1,
-    sale: 0,
+    sale: '',
     date: null,
 });
 
@@ -31,7 +30,7 @@ const saleList = ref([]);
 const storeList = ref([]);
 
 const stores_id = ref(1);
-const customer_payment = ref(0);
+const customer_payment = ref('');
 const created_date = ref(null);
 const flashMessage = ref('');
 const rowIndex = ref(null);
@@ -105,6 +104,8 @@ const onEdit = () => {
                 flashMessage.value = '更新完了しました！'
             }
             getSales();
+            modalShow.value = !modalShow.value;
+
         })
         .catch(function (error) {
             if (response.status != 200) {
@@ -125,6 +126,8 @@ const onDelete = () => {
                 flashMessage.value = '削除完了しました！'
             }
             getSales();
+            modalShow.value = !modalShow.value;
+
         })
         .catch(function (error) {
             if (response.status != 200) {
@@ -136,7 +139,7 @@ const onDelete = () => {
 const onAddMode = () => {
     created_date.value = getToDay();
     stores_id.value = 1;
-    customer_payment.value = 0;
+    customer_payment.value = '';
     selectRowData.value = null;
     addFlag.value = true;
     modalShow.value = !modalShow.value;
@@ -151,9 +154,6 @@ const isEnpteCheck = computed(() => {
     return stores_id.value !== null && customer_payment.value !== null && created_date.value !== null;
 })
 
-const updateShow = (e) => {
-    modalShow.value = e
-}
 
 const getToDay = () => {
     const today = new Date();
@@ -164,11 +164,18 @@ const getToDay = () => {
     return yyyymmdd;
 }
 
+const handleClick = () => {
+    modalShow.value = !modalShow.value;
+}
 </script>
 <template>
-    <catchMoal :show="modalShow" @update:show="updateShow">
-        <div class="flex flex-col justify-center items-center h-full px-5">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-10">売上入力</h2>
+    <Modal :show="modalShow">
+        <div class="close" @pointerdown="handleClick">
+            <span></span>
+            <span></span>
+        </div>
+        <div class="flex flex-col items-center h-full px-5 mt-[-30px]">
+            <h2 class="my-5">売上追加</h2>
 
             <form @submit.prevent class="w-full">
                 <label for="store">店舗選択</label>
@@ -178,7 +185,7 @@ const getToDay = () => {
                     </option>
                 </select>
 
-                <div class=mb-4>
+                <div class=mb-5>
                     <InputLabel for="sale" value="金額入力" />
                     <TextInput id="sale" type="Number" class="mt-1 block w-full" v-model="customer_payment"
                         placeholder="半角で数値入力" required />
@@ -203,7 +210,7 @@ const getToDay = () => {
                 </div>
             </form>
         </div>
-    </catchMoal>
+    </Modal>
     <div class="fixed w-full flex justify-center" v-if="flashMessage">
         <p class="py-4 px-10 rounded-lg bg-[#89ff89] text-[#ffffff]">{{ flashMessage }}</p>
     </div>
@@ -242,5 +249,28 @@ const getToDay = () => {
 <style scoped>
 .selectRowBgColor {
     background-color: #EBF5F0;
+}
+
+.close {
+    position: relative;
+    top: 10px;
+    left: 90%;
+    height: 30px;
+    width: 30px;
+}
+
+.close span {
+    position: absolute;
+
+    height: 3px;
+    width: 34px;
+    background-color: black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.close span:nth-of-type(2) {
+    transform: translate(-50%, -50%) rotate(-45deg);
 }
 </style>
