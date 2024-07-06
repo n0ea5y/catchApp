@@ -224,8 +224,8 @@ const tableHeader = [
         <div class="flex py-4 px-4 m-2 shadow border rounded-lg bg-[#f5fffa]">
             <div class="w-full px-4 py-2 shadow border rounded-lg bg-white">
                 <div class="flex justify-between items-center">
-                    <h4 class="font-semibold text-lg text-gray-800 leading-tight mb-2">{{ userDetail.name }}</h4>
-                    <CatchButton btnType="insert" @click="onAddMode" class="hover:bg-[#539953] w-[80px]">追加
+                    <h4 class="font-semibold text-lg w-[80px] bg-red-200">{{ userDetail.name }}</h4>
+                    <CatchButton btnType="insert" @click="onAddMode" class="hover:bg-[#539953] w-[50px]">追加
                     </CatchButton>
                 </div>
                 <CatchTable>
