@@ -16,7 +16,7 @@ import { ref, computed } from 'vue'
 
     const bgitems = {
         'insert': {
-            normal: 'bg-[#89ff89]',
+            normal: 'bg-[#ffff84]',
             hover: 'bg-[#539953]',
         } ,
         'edit': {
@@ -34,7 +34,7 @@ import { ref, computed } from 'vue'
 <template>
     <button
         type="btn"
-        class="border-2 border-solid mb-2 w-full py-2 rounded-lg text-white font-bold"
+        class="border-2 border-solid mb-2 w-full py-2 rounded-lg text-[#4a4a4a] font-bold"
         :class="[ bgitems[btnType].normal , { 'bg-gray-400 cursor-not-allowed': props.disabled}]"
         :disabled="disabled"
         >

@@ -3,11 +3,10 @@
 </script>
 
 <template>
-    <div class="h-[500px] overflow-scroll rounded">
-
+    <div class="h-[300px] overflow-scroll rounded">
         <table class="table-fixed w-full">
             <thead>
-                <tr class="sticky top-0 bg-gray-300">
+                <tr class="sticky top-0 z-10 bg-gray-300">
                     <slot name="tHeader"></slot>
                 </tr>
             </thead>
