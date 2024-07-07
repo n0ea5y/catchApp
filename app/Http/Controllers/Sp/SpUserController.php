@@ -85,4 +85,10 @@ class SpUserController extends Controller
         $user = User::all();
         return $user;
     }
+
+    public function getUsers()
+    {
+        $user = User::select('id', 'name')->all();
+        return $user;
+    }
 }

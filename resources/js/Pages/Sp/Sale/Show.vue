@@ -14,11 +14,11 @@ import { formatSale, formatDate } from '@/formatList.js'
 import { shopMapping } from '@/utils.js'
 
 const props = defineProps({
-    userDetail: Object,
+    UserId: Number,
 });
 
 onMounted(() => {
-    getSales();
+    getSales(props.UserId);
 })
 
 const form = useForm({
@@ -40,6 +40,9 @@ const modalShow = ref(false);
 
 const addFlag = ref(true);
 
+const users = ref([]);
+const userId = ref(props.UserId);
+
 // 店舗取得API
 axios.get('/store/getStoreList')
     .then(function (res) {
@@ -48,10 +51,17 @@ axios.get('/store/getStoreList')
     .catch(function (error) {
     })
 
+axios.get('/getUserList')
+    .then(function (res) {
+        users.value = res.data;
+    })
+    .catch(function (error) {
+    })
+
 
 // ユーザに紐づく金額取得API
-const getSales = () => {
-    axios.get(`/sale/getSaleList/${props.userDetail.id}`)
+const getSales = (id) => {
+    axios.get(`/sale/getSaleList/${id}`)
         .then(function (response) {
             saleList.value = response.data;
         })
@@ -74,7 +84,7 @@ const rowClick = (item) => {
  */
 const onAdd = () => {
     axios.post('/sale', {
-        users_id: props.userDetail.id,
+        users_id: userId.value,
         stores_id: stores_id.value,
         customer_payment: customer_payment.value,
         created_date: created_date.value,
@@ -83,7 +93,7 @@ const onAdd = () => {
             if (response.status == 200) {
                 flashMessage.value = '更新完了しました！'
             }
-            getSales();
+            getSales(userId.value);
             modalShow.value = !modalShow.value;
         })
         .catch(function (error) {
@@ -95,7 +105,8 @@ const onAdd = () => {
  */
 const onEdit = () => {
     axios.put(`/sale/${rowIndex.value}`, {
-        users_id: props.userDetail.id,
+        users_id: userId.value,
+
         stores_id: stores_id.value,
         customer_payment: customer_payment.value,
         created_date: created_date.value,
@@ -104,7 +115,7 @@ const onEdit = () => {
             if (response.status == 200) {
                 flashMessage.value = '更新完了しました！'
             }
-            getSales();
+            getSales(userId.value);
             modalShow.value = !modalShow.value;
 
         })
@@ -126,7 +137,7 @@ const onDelete = () => {
             if (response.status == 200) {
                 flashMessage.value = '削除完了しました！'
             }
-            getSales();
+            getSales(userId.value);
             modalShow.value = !modalShow.value;
 
         })
@@ -174,84 +185,93 @@ const tableHeader = [
     { "id": "date", "text": "日付" },
     { "id": "pay", "text": "売上" },
 ]
+watch(() => userId.value, (newVal) => {
+    getSales(newVal);
+})
 </script>
 <template>
-    <AuthenticatedLayoutSp>
-        <Modal :show="modalShow">
-            <div class="close" @pointerdown="handleClick">
-                <span></span>
-                <span></span>
-            </div>
-            <div class="flex flex-col items-center h-full px-5 mt-[-30px]">
-                <h2 class="my-5">売上追加</h2>
-
-                <form @submit.prevent class="w-full">
-                    <label for="store">店舗選択</label>
-                    <select id="store" name="store" class="w-full rounded-lg mb-4" v-model="stores_id">
-                        <option value="" disabled selected style="display:none; color: gray;">店舗を選択してください</option>
-                        <option class="" v-for="item in storeList" :key="item" :value="item.value">{{ item.title }}
-                        </option>
-                    </select>
-
-                    <div class=mb-5>
-                        <InputLabel for="sale" value="金額入力" />
-                        <TextInput id="sale" type="Number" class="mt-1 block w-full" v-model="customer_payment"
-                            placeholder="半角で数値入力" required />
-                        <InputError class="mt-2" :message="form.errors.sale" />
-                    </div>
-
-                    <div class=mb-4>
-                        <InputLabel for="date" />
-                        <TextInput id="date" type="Date" class="mt-1 block w-full" v-model="created_date" required />
-                        <InputError class="mt-2" :message="form.errors.date" />
-                    </div>
-                    <div v-if="addFlag" class="flex justify-center">
-                        <CatchButton btnType="insert" @click="onAdd">登録</CatchButton>
-                    </div>
-
-                    <div v-else class="flex flex-col lg:flex-row justify-around">
-                        <CatchButton btnType="edit" :disabled="!isEnpteCheck" @click="onEdit">更新</CatchButton>
-                        <CatchButton btnType="delete" :disabled="!isEnpteCheck" @click="onDelete">削除</CatchButton>
-
-                    </div>
-                </form>
-            </div>
-        </Modal>
-        <div class="fixed w-full flex justify-center" v-if="flashMessage">
-            <p class="py-4 px-10 rounded-lg bg-[#89ff89] text-[#ffffff]">{{ flashMessage }}</p>
+    <Modal :show="modalShow">
+        <div class="close" @pointerdown="handleClick">
+            <span></span>
+            <span></span>
         </div>
+        <div class="flex flex-col items-center h-full px-5 mt-[-30px]">
+            <h2 class="my-5">売上追加</h2>
 
-        <div class="flex py-4 px-4 m-2 shadow border rounded-lg bg-[#f5fffa]">
-            <div class="w-full px-4 py-2 shadow border rounded-lg bg-white">
-                <div class="flex justify-between items-center">
-                    <h4 class="font-semibold text-lg text-gray-800 leading-tight mb-2">{{ userDetail.name }}</h4>
-                    <CatchButton btnType="insert" @click="onAddMode" class="hover:bg-[#539953] w-[80px]">追加
-                    </CatchButton>
+            <form @submit.prevent class="w-full">
+                <label for="store">店舗選択</label>
+                <select id="store" name="store" class="w-full rounded-lg mb-4" v-model="stores_id">
+                    <option value="" disabled selected style="display:none; color: gray;">店舗を選択してください</option>
+                    <option class="" v-for="item in storeList" :key="item" :value="item.value">{{ item.title }}
+                    </option>
+                </select>
+
+
+
+                <div class=mb-5>
+                    <InputLabel for="sale" value="金額入力" />
+                    <TextInput id="sale" type="Number" class="mt-1 block w-full" v-model="customer_payment"
+                        placeholder="半角で数値入力" required />
+                    <InputError class="mt-2" :message="form.errors.sale" />
                 </div>
-                <CatchTable>
-                    <template #tHeader>
-                        <th v-for="h in tableHeader" :key="h.id">{{ h.text }}</th>
-                    </template>
 
-                    <template v-if="saleList.length !== 0" #tData>
-                        <tr v-for="sale in saleList" :key="sale.id"
-                            :class="{ 'selectRowBgColor': selectRowData == sale.id }" class="hover:bg-[#EBF5F0]"
-                            @click="rowClick(sale)">
-                            <td class="py-2 border text-center">{{ shopMapping(storeList, sale.stores_id) }}</td>
-                            <td class="py-2 border text-center">{{ formatSale(sale.customer_payment) }} 円</td>
-                            <td class="py-2 border text-center">{{ formatDate(sale.created_date) }}</td>
-                        </tr>
-                    </template>
+                <div class=mb-4>
+                    <InputLabel for="date" />
+                    <TextInput id="date" type="Date" class="mt-1 block w-full" v-model="created_date" required />
+                    <InputError class="mt-2" :message="form.errors.date" />
+                </div>
+                <div v-if="addFlag" class="flex justify-center">
+                    <CatchButton btnType="insert" @click="onAdd">登録</CatchButton>
+                </div>
 
-                    <template v-else #tData>
-                        <tr>
-                            <td colspan="3" class="py-2 px-5 border text-center text-red-700">登録されていません</td>
-                        </tr>
-                    </template>
-                </CatchTable>
-            </div>
+                <div v-else class="flex flex-col lg:flex-row justify-around">
+                    <CatchButton btnType="edit" :disabled="!isEnpteCheck" @click="onEdit">更新</CatchButton>
+                    <CatchButton btnType="delete" :disabled="!isEnpteCheck" @click="onDelete">削除</CatchButton>
+
+                </div>
+            </form>
         </div>
-    </AuthenticatedLayoutSp>
+    </Modal>
+    <div class="fixed w-full flex justify-center" v-if="flashMessage">
+        <p class="py-4 px-10 rounded-lg bg-[#89ff89] text-[#ffffff]">{{ flashMessage }}</p>
+    </div>
+
+    <div class="flex py-4 px-4 m-2 shadow border rounded-lg bg-[#f5fffa]">
+        <div class="w-full px-4 py-2 shadow border rounded-lg bg-white">
+            <div class="flex justify-end mb-[10px]">
+                <select id="store" name="store" class="w-[120px] rounded-lg mr-auto" v-model="userId">
+                    <option value="" disabled selected style="display:none; color: g ray;">店舗を選択してください</option>
+                    <option class="" v-for="item in users" :key="item" :value="item.id">{{ item.name }}
+                    </option>
+                </select>
+
+                <!-- <h4 class="mt-[10px] mr-auto w-[80px]">{{ userDetail.name }}</h4> -->
+                <button @click="onAddMode" class="w-[50px] bg-yellow-200 border rounded">追加</button>
+                <!-- <CatchButton btnType="insert" @click="onAddMode" class="hover:bg-[#539953] w-[50px]">追加</CatchButton> -->
+            </div>
+            <CatchTable>
+                <template #tHeader>
+                    <th v-for="h in tableHeader" :key="h.id">{{ h.text }}</th>
+                </template>
+
+                <template v-if="saleList.length !== 0" #tData>
+                    <tr v-for="sale in saleList" :key="sale.id"
+                        :class="{ 'selectRowBgColor': selectRowData == sale.id }" class="hover:bg-[#EBF5F0]"
+                        @click="rowClick(sale)">
+                        <td class="py-2 border text-center">{{ shopMapping(storeList, sale.stores_id) }}</td>
+                        <td class="py-2 border text-center">{{ formatSale(sale.customer_payment) }} 円</td>
+                        <td class="py-2 border text-center">{{ formatDate(sale.created_date) }}</td>
+                    </tr>
+                </template>
+
+                <template v-else #tData>
+                    <tr>
+                        <td colspan="3" class="py-2 px-5 border text-center text-red-700">登録されていません</td>
+                    </tr>
+                </template>
+            </CatchTable>
+        </div>
+    </div>
 </template>
 <style scoped>
 .selectRowBgColor {

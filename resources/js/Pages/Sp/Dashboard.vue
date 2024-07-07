@@ -15,7 +15,7 @@ onMounted(() => {
         <div class="px-2 m-1 py-5 rounded shadow-md bg-[#f5fffa]">
             <div class="text-gray-900">すまほだよ〜</div>
             <div class="p-2 rounded shadow-lg">
-                <Link :href="route('sp.user.index')">
+                <Link :href="route('sp.sale.index')">
                 <h2>売上登録</h2>
                 </Link>
             </div>

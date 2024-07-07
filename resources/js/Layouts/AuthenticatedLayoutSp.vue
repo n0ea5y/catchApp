@@ -28,8 +28,8 @@ const handleMenuOpen = () => {
             </ResponsiveNavLink>
           </li>
           <li>
-            <ResponsiveNavLink class="text-white" :href="route('sp.user.index')">
-                ユーザーリスト
+            <ResponsiveNavLink class="text-white" :href="route('sp.sale.index')">
+                売上登録
             </ResponsiveNavLink>
           </li>
         </ul>
