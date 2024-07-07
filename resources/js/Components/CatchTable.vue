@@ -1,9 +1,11 @@
 <script setup>
-
+    const props = defineProps({
+        class: String,
+    })
 </script>
 
 <template>
-    <div class="h-[300px] overflow-scroll rounded">
+    <div :class="props.class" class="overflow-scroll rounded">
         <table class="table-fixed w-full">
             <thead>
                 <tr class="sticky top-0 z-10 bg-gray-300">

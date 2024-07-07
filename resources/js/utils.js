@@ -1,8 +1,10 @@
 
 //店舗マッピング
 export function shopMapping (storeList, storeId)  {
-    const test = storeList.find(function (item) {
+    if(!storeList || !storeId) return;
+
+    const item = storeList.find(function (item) {
         return item.value === storeId;
     });
-    return test.title;
+    return item.title;
 }

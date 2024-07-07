@@ -56,6 +56,7 @@ Route::middleware('auth')->group(function () {
     // 
     Route::get('/user-sale/{userId}', [SpSaleController::class, 'getSaleList']);
 
+    Route::get('/user-total-sale/{userId}', [SpSaleController::class, 'getSaleTotalList']);
 
     // 前店舗取得API
     Route::get('/store/getStoreList', [StoreController::class, 'getAllShopArrya']);
