@@ -244,10 +244,7 @@ watch(() => userId.value, (newVal) => {
                     <option class="" v-for="item in users" :key="item" :value="item.id">{{ item.name }}
                     </option>
                 </select>
-
-                <!-- <h4 class="mt-[10px] mr-auto w-[80px]">{{ userDetail.name }}</h4> -->
                 <button @click="onAddMode" class="w-[50px] bg-yellow-200 border rounded">追加</button>
-                <!-- <CatchButton btnType="insert" @click="onAddMode" class="hover:bg-[#539953] w-[50px]">追加</CatchButton> -->
             </div>
             <CatchTable>
                 <template #tHeader>

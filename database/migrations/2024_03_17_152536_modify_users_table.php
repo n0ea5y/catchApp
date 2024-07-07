@@ -25,8 +25,8 @@ return new class extends Migration
             $table->enum('role', [0, 1])->default(0)->nullable()->comment('権限');
             $table->enum('deleted_at', [0, 1])->default(0)->nullable()->comment('論理削除');
             $table->rememberToken()->comment('認証トークン');
-            $table->timestamp('created_at')->comment('作成日時');
-            $table->timestamp('updated_at')->comment('更新日時');
+	    $table->timestamp('created_at')->useCurrent()->comment('作成日時');
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate()->comment('更新日時');
         });
     }
 

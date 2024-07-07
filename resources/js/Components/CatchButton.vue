@@ -12,8 +12,6 @@ import { ref, computed } from 'vue'
         }
     })
 
-    const hovering = ref(false);
-
     const bgitems = {
         'insert': {
             normal: 'bg-[#ffff84]',
@@ -28,7 +26,6 @@ import { ref, computed } from 'vue'
             hover: 'bg-[#e76767]',
         } ,
     }
-
 </script>
 
 <template>
