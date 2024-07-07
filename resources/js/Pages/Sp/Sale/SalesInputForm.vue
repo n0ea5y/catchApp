@@ -1,5 +1,4 @@
 <script setup>
-import AuthenticatedLayoutSp from '@/Layouts/AuthenticatedLayoutSp.vue';
 import axios from 'axios';
 import { ref, watch, computed, onMounted } from 'vue';
 import TextInput from '@/Components/TextInput.vue'
@@ -14,13 +13,14 @@ import { formatSale, formatDate } from '@/formatList.js'
 import { shopMapping } from '@/utils.js'
 
 const props = defineProps({
-    UserId: Number,
+    userId: Number,
 });
 
 onMounted(() => {
-    getSales(props.UserId);
+    getSales(props.userId);
 })
 
+const emit = defineEmits(['upUserId'])
 const form = useForm({
     store: 1,
     sale: '',
@@ -41,7 +41,7 @@ const modalShow = ref(false);
 const addFlag = ref(true);
 
 const users = ref([]);
-const userId = ref(props.UserId);
+const userId = ref(props.userId);
 
 // 店舗取得API
 axios.get('/store/getStoreList')
@@ -187,6 +187,7 @@ const tableHeader = [
 ]
 watch(() => userId.value, (newVal) => {
     getSales(newVal);
+    emit('upUserId', {userId: newVal})
 })
 </script>
 <template>
@@ -205,9 +206,6 @@ watch(() => userId.value, (newVal) => {
                     <option class="" v-for="item in storeList" :key="item" :value="item.value">{{ item.title }}
                     </option>
                 </select>
-
-
-
                 <div class=mb-5>
                     <InputLabel for="sale" value="金額入力" />
                     <TextInput id="sale" type="Number" class="mt-1 block w-full" v-model="customer_payment"
@@ -239,18 +237,18 @@ watch(() => userId.value, (newVal) => {
     <div class="flex py-4 px-4 m-2 shadow border rounded-lg bg-[#f5fffa]">
         <div class="w-full px-4 py-2 shadow border rounded-lg bg-white">
             <div class="flex justify-end mb-[10px]">
-                <select id="store" name="store" class="w-[120px] rounded-lg mr-auto" v-model="userId">
-                    <option value="" disabled selected style="display:none; color: g ray;">店舗を選択してください</option>
+                <select id="user" name="user" class="w-[120px] rounded-lg mr-auto" v-model="userId">
+                    <option value="" disabled selected style="display:none; color: gray;">ユーザーを選択してください</option>
                     <option class="" v-for="item in users" :key="item" :value="item.id">{{ item.name }}
                     </option>
                 </select>
                 <button @click="onAddMode" class="w-[50px] bg-yellow-200 border rounded">追加</button>
             </div>
-            <CatchTable>
+            <CatchTable class="h-[300px]">
                 <template #tHeader>
                     <th v-for="h in tableHeader" :key="h.id">{{ h.text }}</th>
                 </template>
-
+                
                 <template v-if="saleList.length !== 0" #tData>
                     <tr v-for="sale in saleList" :key="sale.id"
                         :class="{ 'selectRowBgColor': selectRowData == sale.id }" class="hover:bg-[#EBF5F0]"

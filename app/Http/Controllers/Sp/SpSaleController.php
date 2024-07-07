@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Sale;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class SpSaleController extends Controller
 {
@@ -114,6 +115,18 @@ class SpSaleController extends Controller
             ->get();
 
         return $sale;
+    }
+    public function getSaleTotalList (String $id) {
+        $startDate = Carbon::now()->startOfMonth();
+        $endDate = Carbon::now()->endOfMonth();
+
+        $totalSale = Sale::join('users', 'sales.users_id', '=', 'users.id')
+        ->where('users_id', $id)
+        ->whereBetween('created_date', [$startDate, $endDate])
+        ->selectRaw('sales.stores_id, users.commission, SUM(customer_payment) as total_customer_payment')
+        ->groupBy('sales.stores_id', 'users.commission')
+        ->get();
+    return $totalSale;
     }
 
 }
