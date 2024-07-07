@@ -17,7 +17,7 @@
     <AuthenticatedLayoutSp>
         <div class="py-6 px-2 mb-10 shadow flex flex-wrap justify-center ">
             <template v-for="item in userList" :key="item.id">
-                <Link :href="route('sp.sale.show', { sale: item.id })">
+                <Link :href="route('sp.sale.index', { sale: item.id })">
                 <div class="rounded-lg mb-10 w-12/12 shadow-lg bg-[#f5fffa]">
                     <div class="px-6 py-4">
                         <div class="font-bold text-xl mb-2">{{ item.name }}</div>

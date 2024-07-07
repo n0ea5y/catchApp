@@ -54,7 +54,7 @@ Route::middleware('auth')->group(function () {
     ]);
 
     // 
-    Route::get('/getSaleData', [SpSaleController::class, 'getSaleList']);
+    Route::get('/user-sale/{userId}', [SpSaleController::class, 'getSaleList']);
 
 
     // 前店舗取得API
@@ -63,6 +63,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/sale/getSaleList/{userId}', [SaleController::class, 'getSales']);//売上取得
     // ユーザー一覧取得API
     Route::get('/getUserList',[ UserController::class, 'getUserList']);
+    Route::get('/api-users',[ UserController::class, 'getUsers']);
+    Route::get('/user-sale/{userId}',[ SpSaleController::class, 'getSaleData']);
 
     // // ログイン者の編集
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

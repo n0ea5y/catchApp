@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sp;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Sale;
 use Illuminate\Support\Carbon;
@@ -16,7 +17,8 @@ class SpSaleController extends Controller
      */
     public function index()
     {
-        //
+        $id = Auth::id();
+        return Inertia::render('Sp/Sale/Index', ['userId' => $id]);
     }
 
     /**
