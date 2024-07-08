@@ -244,7 +244,7 @@ watch(() => userId.value, (newVal) => {
                 </select>
                 <button @click="onAddMode" class="w-[50px] bg-yellow-200 border rounded">追加</button>
             </div>
-            <CatchTable class="h-[300px]">
+            <CatchTable class="h-[410px]">
                 <template #tHeader>
                     <th v-for="h in tableHeader" :key="h.id">{{ h.text }}</th>
                 </template>

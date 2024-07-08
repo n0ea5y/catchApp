@@ -1,5 +1,6 @@
 <script setup>
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import { onMounted, onUnmounted } from 'vue';
 
 const handleMenuOpen = () => {
   const menuButton = document.getElementById('menu-button');
@@ -8,6 +9,20 @@ const handleMenuOpen = () => {
   menuButton.classList.toggle('open');
   mask.classList.toggle('open');
   navMenu.classList.toggle('open');
+};
+// 初期ロード時とリサイズ時にビューポートの高さを設定
+onMounted(() => {
+  setViewportHeight();
+  window.addEventListener('resize', setViewportHeight);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', setViewportHeight);
+});
+
+const setViewportHeight = () => {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
 };
 </script>
 
@@ -40,12 +55,15 @@ const handleMenuOpen = () => {
   </main>
 
   <footer id="footer" class="bg-[#f5fffa] fixed bottom-0 w-full">
-    <div class="mx-auto text-gray-400 py-6 px-4 sm:px-6 text-center">
+    <div class="mx-auto text-gray-400 py-2 px-4 sm:px-6 text-center">
       © 2021 - Catch App.
     </div>
   </footer>
 </template>
 <style scoped>
+:root {
+  --vh: 1vh; /* 初期値を設定 */
+}
 .menu {
   position: relative;
   height: 30px;
