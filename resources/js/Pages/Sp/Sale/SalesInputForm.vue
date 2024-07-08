@@ -20,7 +20,7 @@ onMounted(() => {
     getSales(props.userId);
 })
 
-const emit = defineEmits(['upUserId'])
+const emit = defineEmits(['upUserId', 'action'])
 const form = useForm({
     store: 1,
     sale: '',
@@ -95,6 +95,7 @@ const onAdd = () => {
             }
             getSales(userId.value);
             modalShow.value = !modalShow.value;
+            emit('action')
         })
         .catch(function (error) {
         });
@@ -110,6 +111,7 @@ const onEdit = () => {
         stores_id: stores_id.value,
         customer_payment: customer_payment.value,
         created_date: created_date.value,
+
     })
         .then(function (response) {
             if (response.status == 200) {
@@ -117,7 +119,7 @@ const onEdit = () => {
             }
             getSales(userId.value);
             modalShow.value = !modalShow.value;
-
+            emit('action')
         })
         .catch(function (error) {
             if (response.status != 200) {
@@ -126,27 +128,26 @@ const onEdit = () => {
         });
 }
 
-/**
- * 削除時処理関数
- */
-const onDelete = () => {
-    const isCheck = confirm("削除しますか？")
-    if (!isCheck) return;
-    axios.delete(`/sale/${rowIndex.value}`)
-        .then(function (response) {
-            if (response.status == 200) {
-                flashMessage.value = '削除完了しました！'
-            }
-            getSales(userId.value);
-            modalShow.value = !modalShow.value;
-
-        })
-        .catch(function (error) {
-            if (response.status != 200) {
-                flashMessage.value = '削除に失敗しました！'
-            }
-        });
-}
+    /**
+     * 削除時処理関数
+     */
+    const onDelete = () => {
+        const isCheck = confirm("削除しますか？")
+        if (!isCheck) return;
+        axios.delete(`/sale/${rowIndex.value}`)
+            .then(function (response) {
+                if (response.status == 200) {
+                    flashMessage.value = '削除完了しました！'
+                }
+                getSales(userId.value);
+                modalShow.value = !modalShow.value;
+                // emit('upUserId', {userId: newVal})
+                emit('action')
+            })
+            .catch(function (error) {
+                    flashMessage.value = '削除に失敗しました！'
+            });
+    }
 
 const onAddMode = () => {
     created_date.value = getToDay();
@@ -165,7 +166,6 @@ watch(() => flashMessage.value, (newVal) => {
 const isEnpteCheck = computed(() => {
     return stores_id.value !== null && customer_payment.value !== null && created_date.value !== null;
 })
-
 
 const getToDay = () => {
     const today = new Date();
@@ -254,8 +254,8 @@ watch(() => userId.value, (newVal) => {
                         :class="{ 'selectRowBgColor': selectRowData == sale.id }" class="hover:bg-[#EBF5F0]"
                         @click="rowClick(sale)">
                         <td class="py-2 border text-center">{{ shopMapping(storeList, sale.stores_id) }}</td>
-                        <td class="py-2 border text-center">{{ formatSale(sale.customer_payment) }} 円</td>
                         <td class="py-2 border text-center">{{ formatDate(sale.created_date) }}</td>
+                        <td class="py-2 border text-center">{{ formatSale(sale.customer_payment) }} 円</td>
                     </tr>
                 </template>
 

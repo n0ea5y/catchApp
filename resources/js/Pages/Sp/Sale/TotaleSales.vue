@@ -6,7 +6,6 @@ import { onMounted, ref, watch } from 'vue';
 import { formatSale } from '@/formatList.js'
 import { shopMapping } from '@/utils.js'
 
-
 const props = defineProps({
     userId: Number,
     storeList: Array,
@@ -19,6 +18,7 @@ const totalList = ref([]);
 watch(() => props.userId, (newVal) => {
     getTotalPay(newVal);
 })
+
 const getTotalPay = (userId) => {
     axios.get('/user-total-sale/' + userId)
         .then(function (res) {
@@ -28,6 +28,9 @@ const getTotalPay = (userId) => {
         })
 }
 
+defineExpose({
+    getTotalPay
+});
 const tableHeader = [
     { 'id': 'shop', 'text': '店舗名' },
     { 'id': 'sale', 'text': '売上トータル' },

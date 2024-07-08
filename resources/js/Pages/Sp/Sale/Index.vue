@@ -11,6 +11,8 @@ const props = defineProps({
 })
 const id = ref(props.userId);
 const storeList = ref([]);
+const getTotalPayRef = ref(null);
+
 const setUsreId = (item) => {
     id.value = item.userId;
 }
@@ -21,12 +23,16 @@ axios.get('/store/getStoreList')
     })
     .catch(function (error) {
     })
+
+const getTotalPay = () => {
+    getTotalPayRef.value.getTotalPay(id.value);
+}
     
 </script>
 <template>
     <AuthenticatedLayoutSp>
-        <sales-input-form :userId="id" @up-user-id="setUsreId"/>
-        <totale-sales :userId="id" :storeList="storeList"/>
+        <sales-input-form :userId="id" @up-user-id="setUsreId" @action="getTotalPay"/>
+        <totale-sales :userId="id" :storeList="storeList" ref="getTotalPayRef"/>
     </AuthenticatedLayoutSp>
 </template>
 <style scoped>
