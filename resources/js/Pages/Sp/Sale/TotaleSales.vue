@@ -49,7 +49,7 @@ const total = () => {
     <catch-contener>
         <div class="px-4 py-2 shadow border rounded-lg bg-white">
             <h1 class="font-bold underline">売上トータル</h1>
-            <CatchTable class="h-[200px]">
+            <CatchTable>
                 <template #tHeader>
                     <th v-for="h in tableHeader" :key="h.id">{{ h.text }}</th>
                 </template>
