@@ -12,15 +12,26 @@ use App\Http\Controllers\Sp\SpSaleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Jenssegers\Agent\Agent;
+
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return Inertia::render('Pc/Dashboard');
-    });
+    $agent = new Agent();
+    $isMobile = $agent->isMobile();
+    
+    if($isMobile){
+        Route::get('/', function () {
+            return Inertia::render('Sp/Dashboard');
+        });
+    }else{
+        Route::get('/', function () {
+            return Inertia::render('Pc/Dashboard');
+        });
+    }
         
-    Route::get('/dashboard', function () {
-        return Inertia::render('Pc/Dashboard');
-    })->middleware(['auth', 'verified'])->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return Inertia::render('Pc/Dashboard');
+    // })->middleware(['auth', 'verified'])->name('dashboard');
 
     Route::resource('/user', UserController::class);
     Route::resource('/sale', SaleController::class);
