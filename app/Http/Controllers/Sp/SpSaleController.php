@@ -23,26 +23,20 @@ class SpSaleController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-
         $validated = $request->validate([
             'stores_id' => 'required',
             'customer_payment' => 'required',
             'created_date' => 'required',
         ]);
 
+        if(!$validated) return;
+
         try {
+
             $sale = new Sale();
             $sale->fill($request->all());
             $sale->save();
@@ -65,14 +59,6 @@ class SpSaleController extends Controller
         return Inertia::render('Sp/Sale/Show',[
             'userDetail' => $userDetail,
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**
@@ -104,28 +90,39 @@ class SpSaleController extends Controller
         $sale->delete();
     }
 
-    public function getSales(String $id)
+    public function getSales(Request $request)
     {
-        $startDate = Carbon::now()->startOfMonth();
-        $endDate = Carbon::now()->endOfMonth();
-        
-        $sale = Sale::where('users_id', $id)
+        $year = Carbon::now()->year;
+        $month = $request->input('month');
+
+        $startDate = Carbon::create($year, $month, 1);
+        $endDate = Carbon::create($year, $month, 1)->endOfMonth();
+
+        $sale = Sale::where('users_id', $request['userId'])
             ->whereBetween('created_date', [$startDate, $endDate])
             ->orderBy('created_date')
             ->get();
 
         return $sale;
     }
-    public function getSaleTotalList (String $id) {
-        $startDate = Carbon::now()->startOfMonth();
-        $endDate = Carbon::now()->endOfMonth();
+
+    public function getSaleTotalList (Request $request) {
+
+        $userId = $request['userId'];
+        
+        $year = Carbon::now()->year;
+        $month = $request->input('month');
+
+        $startDate = Carbon::create($year, $month, 1);
+        $endDate = Carbon::create($year, $month, 1)->endOfMonth();
 
         $totalSale = Sale::join('users', 'sales.users_id', '=', 'users.id')
-        ->where('users_id', $id)
+        ->where('users_id', $userId)
         ->whereBetween('created_date', [$startDate, $endDate])
         ->selectRaw('sales.stores_id, users.commission, SUM(customer_payment) as total_customer_payment')
         ->groupBy('sales.stores_id', 'users.commission')
         ->get();
+        
     return $totalSale;
     }
 

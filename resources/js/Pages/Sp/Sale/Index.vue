@@ -11,11 +11,25 @@ const props = defineProps({
 })
 const id = ref(props.userId);
 const storeList = ref([]);
+const totalList = ref([]);
 const getTotalPayRef = ref(null);
 
 const setUsreId = (item) => {
     id.value = item.userId;
 }
+
+const getTotalPay = (item) => {
+    const userId = item.userId;
+    const month = item.month;
+
+    axios.get(`/user-total-sale?userId=${userId}&month=${month}`)
+        .then(function (res) {
+            totalList.value = res.data;
+        })
+        .catch(function (error) {
+        })
+}
+
 // 店舗取得API
 axios.get('/store/getStoreList')
     .then(function (res) {
@@ -24,15 +38,11 @@ axios.get('/store/getStoreList')
     .catch(function (error) {
     })
 
-const getTotalPay = () => {
-    getTotalPayRef.value.getTotalPay(id.value);
-}
-    
 </script>
 <template>
     <AuthenticatedLayoutSp>
         <sales-input-form :userId="id" @up-user-id="setUsreId" @action="getTotalPay"/>
-        <totale-sales :userId="id" :storeList="storeList" ref="getTotalPayRef"/>
+        <totale-sales :totalList="totalList" :storeList="storeList" ref="getTotalPayRef"/>
     </AuthenticatedLayoutSp>
 </template>
 <style scoped>

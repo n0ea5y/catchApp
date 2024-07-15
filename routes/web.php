@@ -64,15 +64,14 @@ Route::middleware('auth')->group(function () {
         'destroy' => 'sp.sale.destroy',
     ]);
 
-    // 
-    Route::get('/user-sale/{userId}', [SpSaleController::class, 'getSaleList']);
+    // 日別売上取得
+    Route::get('salesData', [SpSaleController::class, 'getSales'])->name('sp.sale.get-sales');
 
-    Route::get('/user-total-sale/{userId}', [SpSaleController::class, 'getSaleTotalList']);
+    // 売上の店舗合計取得
+    Route::get('/user-total-sale', [SpSaleController::class, 'getSaleTotalList']);
 
     // 前店舗取得API
     Route::get('/store/getStoreList', [StoreController::class, 'getAllShopArrya']);
-    // ユーザー売上取得API
-    Route::get('/sale/getSaleList/{userId}', [SaleController::class, 'getSales']);//売上取得
     // ユーザー一覧取得API
     Route::get('/getUserList',[ UserController::class, 'getUserList']);
     Route::get('/api-users',[ UserController::class, 'getUsers']);

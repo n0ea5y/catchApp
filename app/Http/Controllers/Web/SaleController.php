@@ -8,7 +8,7 @@ use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Sale;
 use Illuminate\Support\Carbon;
-
+use Illuminate\Support\Facades\Log;
 
 class SaleController extends Controller
 {
@@ -100,18 +100,5 @@ class SaleController extends Controller
     {
         $sale = Sale::find($id);
         $sale->delete();
-    }
-
-    public function getSales(String $id)
-    {
-        $startDate = Carbon::now()->startOfMonth();
-        $endDate = Carbon::now()->endOfMonth();
-        
-        $sale = Sale::where('users_id', $id)
-            ->whereBetween('created_date', [$startDate, $endDate])
-            ->orderBy('created_date')
-            ->get();
-
-        return $sale;
     }
 }

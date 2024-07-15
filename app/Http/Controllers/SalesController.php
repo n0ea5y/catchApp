@@ -9,7 +9,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Carbon;
 class SalesController extends Controller
 {
-    public function getSales(String $id)
+    public function getSales(String $id, $month)
     {
         $startDate = Carbon::now()->startOfMonth();
         $endDate = Carbon::now()->endOfMonth();
