@@ -34,8 +34,7 @@ const tableHeader = [
                     <tr v-else class="border-b-2 border-gray-100" v-for="item in totalList" :key="item.id">
                         <td class="text-center py-2">{{ shopMapping(props.storeList, item.stores_id) }}</td>
                         <td class="text-right py-2 pr-5">{{ formatSale(item.total_customer_payment) }}円</td>
-                        <td class="text-right py-2 pr-5">{{ formatSale(Math.floor(item.total_customer_payment *
-                        (item.commission / 100))) }}円</td>
+                        <td class="text-right py-2 pr-5">{{ formatSale(Math.floor(item.total_customer_payment * (item.stores_id != 2 ? (item.commission / 100) : (18 / 100)))) }}円</td>
                     </tr>
                 </template>
             </CatchTable>

@@ -199,12 +199,14 @@
 
     // 月変更時にデータ取得
     const chengeMonth = (item) => {
+        selectRowData.value = null;
         getSales(props.userId, item.target.value);
         emit('action', { 'userId': props.userId, 'month': item.target.value })
 
     }
     // ユーザー変更時にデータ取得
     const chengeUser = (item) => {
+        selectRowData.value = null;
         getSales(item.target.value, month.value);
         emit('action', { 'userId': item.target.value, 'month': month.value })
     }
