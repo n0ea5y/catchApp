@@ -10,9 +10,6 @@ import CatchButton from '@/Components/CatchButton.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { formatSale, formatDate } from '@/formatList.js'
 
-const props = defineProps({
-});
-
 onMounted(() => {
     getUserListAPI();
 })
@@ -122,7 +119,7 @@ const onEdit = () => {
  * 削除時処理関数
  */
 const onDelete = (item) => {
-    axios.delete('/user/'+ userDetail.value.id)
+    axios.delete('/user/' + userDetail.value.id)
         .then((res) => {
             getUserListAPI();
         })
@@ -154,10 +151,9 @@ watch(() => flashMessage.value, (newVal) => {
         <div class="fixed w-full flex justify-center" v-if="flashMessage">
             <p class="py-4 px-10 rounded-lg bg-[#89ff89] text-[#ffffff]">{{ flashMessage }}</p>
         </div>
-
-        <div class="flex py-4 px-4 m-2 shadow border rounded-lg bg-[#f5fffa]">
-            <div class="w-3/12 py-12 px-4 m-2 shadow border rounded-lg bg-white">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-10">キャッチ一覧</h2>
+        <div class="flex flex-col py-4 px-2 m-2  border rounded-lg bg-[#f5fffa]">
+            <div class="py-5 px-2 m-2 border rounded-lg bg-white">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-2">キャッチ一覧</h2>
                 <CatchTable>
                     <template #tHeader>
                         <th class="py-2 px-5 border">名前</th>
@@ -179,7 +175,7 @@ watch(() => flashMessage.value, (newVal) => {
                 </CatchTable>
             </div>
 
-            <div class="w-9/12 py-12 px-4 m-2 shadow border rounded-lg bg-white">
+            <div class="py-12 px-4 m-2 shadow border rounded-lg bg-white">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-10">キャッチ情報入力</h2>
 
                 <form @submit.prevent class="w-full">
@@ -248,6 +244,7 @@ watch(() => flashMessage.value, (newVal) => {
                 </form>
             </div>
         </div>
+
 
     </AuthenticatedLayoutSp>
 </template>

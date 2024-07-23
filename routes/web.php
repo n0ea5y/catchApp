@@ -33,8 +33,8 @@ Route::middleware('auth')->group(function () {
     //     return Inertia::render('Pc/Dashboard');
     // })->middleware(['auth', 'verified'])->name('dashboard');
 
-    Route::resource('/user', UserController::class);
-    Route::resource('/sale', SaleController::class);
+    // Route::resource('/user', UserController::class);
+    // Route::resource('/sale', SaleController::class);
     // Route::resource('/profile', ProfileController::class);
     
     /**
@@ -54,6 +54,8 @@ Route::middleware('auth')->group(function () {
         'destroy' => 'sp.user.destroy',
     ]);
     
+    Route::resource('/user', SpSaleController::class);
+
     Route::resource('/sp/sale', SpSaleController::class)->names([
         'index' => 'sp.sale.index',
         'create' => 'sp.sale.create',

@@ -46,7 +46,6 @@ class SpSaleController extends Controller
 
              return (['status' => 'error', 'message' => $th->getMessage()]);
         }
-
     }
 
     /**

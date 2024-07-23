@@ -37,6 +37,7 @@ const setViewportHeight = () => {
       <div class="mask" id="mask" @click="handleMenuOpen"></div>
       <nav class="nav-menu" id="nav-menu">
         <ul>
+         
           <li>
             <ResponsiveNavLink class="text-white" :href="route('sp.dashboard')" :active="route().current('dashboard')">
                 Dashboard
@@ -45,6 +46,11 @@ const setViewportHeight = () => {
           <li>
             <ResponsiveNavLink class="text-white" :href="route('sp.sale.index')">
                 売上登録
+            </ResponsiveNavLink>
+          </li>
+          <li>
+            <ResponsiveNavLink class="text-white" :href="route('sp.user.create')">
+                ユーザー登録
             </ResponsiveNavLink>
           </li>
         </ul>

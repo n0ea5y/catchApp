@@ -12,11 +12,9 @@ onMounted(() => {
     <Head title="Dashboard" />
     <AuthenticatedLayoutSp>
         <div class="px-2 m-1 py-5 rounded shadow-md bg-[#f5fffa]">
-
             
-
-            <div class="h-[80px] mb-5 flex justify-center items-center rounded shadow-lg bg-[#fdf5e6]">
-                <Link class="inline-block" :href="route('sp.sale.index')">
+            <div class="h-[80px] mb-5  rounded shadow-lg bg-[#fdf5e6]">
+                <Link class="flex justify-center items-center  w-full h-full" :href="route('sp.sale.index')">
                     <h2>売上登録</h2>
                 </Link>
             </div>
